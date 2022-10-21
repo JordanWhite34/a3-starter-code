@@ -3,7 +3,8 @@ Name(s): Colin Farmer, Jordan White
 UW netid(s): cfarme, jwhite34
 '''
 
-from game_engine import genmoves 
+from shutil import move
+from game_engine import genmoves
 
 class BackgammonPlayer:
     def __init__(self):
@@ -12,11 +13,11 @@ class BackgammonPlayer:
         self.states_explored = 0
         self.cuttoffs = 0
         # feel free to create more instance variables as needed.
-    
+
     def initialize_move_gen_for_state(self, state, who, die1, die2):
         self.move_generator = self.GenMoveInstance.gen_moves(state, who, die1, die2)
 
-    
+
     # TODO: return a string containing your UW NETID(s)
     # For students in partnership: UWNETID + " " + UWNETID
     def nickname(self):
@@ -33,7 +34,7 @@ class BackgammonPlayer:
         else:
             # Run Minimax
             self.move()
-        
+
 
     # Returns a tuple containing the number explored
     # states as well as the number of cutoffs.
@@ -53,15 +54,15 @@ class BackgammonPlayer:
         # TODO: update your staticEval function appropriately
         if func != None:
             def staticEval(self,state): func
-        
-    
+
+
     # checks legality of a move
     def legalMove(self, state, index, die):
         for i in range(die):
             if (self.pointLists[index+i+1][0] == 1 - self.pointLists[index][0]) and (self.pointLists[index+i+1][0].length >= 2):
                 return False
         return True
-    
+
     # Given a state and a roll of dice, it returns the best move for
     # the state.whose_move.
     # Keep in mind: a player can only pass if the player cannot move any checker with that role
@@ -69,13 +70,20 @@ class BackgammonPlayer:
         # TODO: return a move for the current state and for the current player.
         # Hint: you can get the current player with state.whose_move
         highest_score = -100000
+        best_move = none
         # Look at all possible moves
+        moveList = get_all_possible_moves(self)
+
+        for moves in moveList:
+            if staticEval(self, moves) > highest_score:
             # If that move is legal
                 # Get the score for that move
-                # If this move has the best relative score, then take that move and save if
-        
+                # If this move has the best relative score, then take that move and save it
+                best_move = move
+                highest_score = staticEval(self, moves)
+
         # return the best move for a given state
-        return "q"
+        return best_move
 
 
     # Hint: Look at game_engine/boardState.py for a board state properties you can use.
@@ -89,10 +97,10 @@ class BackgammonPlayer:
                 white_pip = white_pip + len(i)*(25-itr)
             elif(i[0] == 1):
                 red_pip = red_pip + len(i) * itr
-        # any blocked pieaces
+        # any blocked pieces
         if state.whose_move == 0: return red_pip - white_pip
         else: return white_pip-red_pip
-        
+
     def get_all_possible_moves(self):
         """Uses the mover to generate all legal moves. Returns an array of move commands"""
         move_list = []
