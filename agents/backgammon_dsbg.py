@@ -66,19 +66,19 @@ class BackgammonPlayer:
     # Given a state and a roll of dice, it returns the best move for
     # the state.whose_move.
     # Keep in mind: a player can only pass if the player cannot move any checker with that role
-def move(self, state, die1=1, die2=6):
-        # TODO: return a move for the current state and for the current player.
-        # Hint: you can get the current player with state.whose_move
-        highest_score = -100000
-        best_move = None
-        move_list = self.get_all_possible_moves()
-        for move in move_list:
-            score = self.staticEval(move) # We are assuming that move is a state. If something breaks, look here.
-            if score > highest_score:
-                best_move = move
-                highest_score = score
-        # return the best move for a given state
-        return best_move
+    def move(self, state, die1=1, die2=6):
+            # TODO: return a move for the current state and for the current player.
+            # Hint: you can get the current player with state.whose_move
+            highest_score = -100000
+            best_move = None
+            move_list = self.get_all_possible_moves()
+            for move in move_list:
+                score = self.staticEval(move) # We are assuming that move is a state. If something breaks, look here.
+                if score > highest_score:
+                    best_move = move
+                    highest_score = score
+            # return the best move for a given state
+            return best_move
 
     # Hint: Look at game_engine/boardState.py for a board state properties you can use.
     def staticEval(self, state):
